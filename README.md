@@ -1,6 +1,8 @@
 # CoffeeRoaster
 
-![alt text](/image/Test circuit diagram for Coffee Roaster.PNG)
+![alt text](
+      CoffeeRoaster/image/Test circuit diagram for Coffee Roaster.PNG
+    )
 
 It is not usable at the moment, in development stage.
 
