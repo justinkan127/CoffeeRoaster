@@ -2,8 +2,8 @@
 
 void updateSet() {
 
-  byte bufferSize = 150; //define number of bytes expected on the JSON thread
-  char json[bufferSize]; //create a char array buffer that is 150 bytes in size in this case
+  byte bufferSize = 150; //define number of bytes expected on the JSON thread, should be more
+  char json[bufferSize]; //create a char array buffer
 
   //Opens a 'settings.json' text file on SD that has has a JSON string stored in filePath = /mnt/sd/arduino/www/[your_sketch_name]
   File dataFile = FileSystem.open(filePath, FILE_READ);
@@ -12,7 +12,7 @@ void updateSet() {
 
   Serial.println(json); //prints whatever JSON string values were read
 
-  StaticJsonBuffer<JSON_OBJECT_SIZE(12)> jsonBuffer; //We know our JSON string just has 12 objects only and no arrays, so our buffer is set to handle that many
+  StaticJsonBuffer<JSON_OBJECT_SIZE(12)> jsonBuffer; //Need more buffer (more than 12byte) for array mapping
   JsonObject& root = jsonBuffer.parseObject(json);    // breaks the JSON string into individual items, saves into JsonObject 'root'
 
   if (!root.success()) {
