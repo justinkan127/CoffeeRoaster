@@ -1,3 +1,5 @@
+#include "ArduinoJson.h"
+
 void updateSet() {
 
   byte bufferSize = 150; //define number of bytes expected on the JSON thread
