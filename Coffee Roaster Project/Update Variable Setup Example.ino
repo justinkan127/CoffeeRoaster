@@ -1,19 +1,17 @@
 void updateSet() {
 
-  File dataFile = FileSystem.open(filePath, FILE_READ);   //open file (path has been set elsewhere and works)
-  String json = dataFile.readString();                    // read data to 'json' variable
-  dataFile.close();                                       // close file
+  byte bufferSize = 150; //define number of bytes expected on the JSON thread
+  char json[bufferSize]; //create a char array buffer that is 150 bytes in size in this case
 
+  //Opens a 'settings.json' text file on SD that has has a JSON string stored in filePath = /mnt/sd/arduino/www/[your_sketch_name]
+  File dataFile = FileSystem.open(filePath, FILE_READ);
+  dataFile.readBytes(json, bufferSize);
+  dataFile.close();
 
-// ArdunoJson.h //
+  Serial.println(json); //prints whatever JSON string values were read
 
-//  const int BUFFER_SIZE = JSON_OBJECT_SIZE(12); //alternate way of declaring buffer size (but doesn't work for me) 
-//  StaticJsonBuffer<BUFFER_SIZE> jsonBuffer; 
-
-  StaticJsonBuffer<400> jsonBuffer;       // buffer must be big enough to hold the whole JSON string
+  StaticJsonBuffer<JSON_OBJECT_SIZE(12)> jsonBuffer; //We know our JSON string just has 12 objects only and no arrays, so our buffer is set to handle that many
   JsonObject& root = jsonBuffer.parseObject(json);    // breaks the JSON string into individual items, saves into JsonObject 'root'
-
-  Serial.println(json);
 
   if (!root.success()) {
     Serial.println("parseObject() failed");
@@ -41,10 +39,10 @@ void updateSet() {
     Serial.println(waterTime);
     Serial.print("waterDay: ");
     Serial.println(waterDay);
+    Serial.println();
 
-    counterLight = lightDay; 
-    counterWater = waterDay;
+    counterLight = lightDay; //update day counters for light
+    counterWater = waterDay; //update day counters for irrigation
 
-
-  } // end of if(!root.success())
+  }
 }
